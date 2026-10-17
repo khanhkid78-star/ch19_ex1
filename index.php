@@ -45,11 +45,23 @@ $code = 'tele';
 $name = 'Fender Telecaster';
 $description = 'NA';
 $price = '949.99';
+$discount_percent = 0;
 
 // Insert the data
+$existing_product = get_product_by_name($name); 
 
-// Display an appropriate message
-$insert_message = "No rows were inserted.";
+if ($existing_product) {
+    $insert_message = "Cannot insert '$name'. It already exists.";
+} else {
+    
+    $product_id = add_product($category_id, $code, $name, $description, $price, $discount_percent);
+    if ($product_id) {
+        $insert_message = "'$name' has been added successfully with ID: $product_id.";
+    } else {
+        $insert_message = "Cannot insert '$name'.";
+    }
+}
+
 
 include 'home.php';
 ?>
