@@ -22,7 +22,18 @@ $products = get_products_by_category($cat_id);
 $product_name = 'Fender Telecaster';
 
 // Delete the product and display an appropriate messge
-$delete_message = "No rows were deleted.";
+$product_to_delete = get_product_by_name($product_name);
+if ($product_to_delete) {
+    $product_id = $product_to_delete['productID'];
+    $row_count = delete_product($product_id);
+    if ($row_count > 0) {
+        $delete_message = "Deleted '$product_name' .";
+    } else {
+        $delete_message = "Cannot delete '$product_name'.";
+    }
+} else {
+    $delete_message = "Cannot find '$product_name' to delete.";
+}
 
 /***************************************
  * Insert a product
